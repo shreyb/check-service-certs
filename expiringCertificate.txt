@@ -1,0 +1,4 @@
+Dear {{.ServiceName}} Admin,
+
+The {{.ServiceName}} service certificate located at {{.CertPath}} will be expiring in {{.NumDays}} days.  
+Please renew the certificate, and if needed, register it with FERRY, as soon as possible.

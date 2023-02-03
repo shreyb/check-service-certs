@@ -1,0 +1,36 @@
+global:
+  minCertLifetime: 720h # If the service cert expires within this window from now, send alert message
+  certPaths:
+    - /path/to/cert/1
+    - /path/to/cert2
+  template: "/usr/share/check-service-certs/templates/expiringCertificate.txt"
+  logfile: "/var/log/check-service-certs/check-service-certs.log"
+  timeout: 2m
+
+# Notifications
+notifications:
+  SLACK_ALERTS_URL: https://hooks.slack.com/FILL_IN_URL_HERE
+  admin_email: admin@example.com
+
+# Same as above, but used in test runs
+notifications_test:
+  SLACK_ALERTS_URL: https://hooks.slack.com/FILL_IN_URL_HERE
+  admin_email: admin@example.com
+
+namedServices:
+  service1:
+    certPaths:
+      - /path/to/service1/cert1
+      - /path/to/service1/cert2
+    minCertLifetime: 720h # If this is set, used for the service.  Otherwise, use global
+  service2:
+    certPaths:
+      - /path/to/service2/cert1
+      - /path/to/service2/cert2
+    minCertLifetime: 720h # If this is set, used for the service.  Otherwise, use global
+
+# Email settings
+email:
+  from: fife-group@fnal.gov
+  smtpHost: localhost
+  smtpPort: 25
