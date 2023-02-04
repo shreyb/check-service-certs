@@ -1,0 +1,10 @@
+## Logrotate file for check-service-certs
+#
+## check-service-certs log
+#/var/log/check-service-certs/check-service-certs.log {
+#    monthly 
+#    rotate 5
+#    dateext
+#    compress
+#    missingok
+#}
