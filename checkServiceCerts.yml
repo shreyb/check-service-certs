@@ -31,6 +31,6 @@ namedServices:
 
 # Email settings
 email:
-  from: fife-group@fnal.gov
+  from: admin@example.com
   smtpHost: localhost
   smtpPort: 25
