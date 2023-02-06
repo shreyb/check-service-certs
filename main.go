@@ -166,14 +166,25 @@ func main() {
 		if viper.GetBool("test") {
 			log.Info("Running in test mode.  Will not send messages")
 		}
+		var notificationsWg sync.WaitGroup
 		for m := range notificationsChan {
-			if err := m.Message.sendMessage(ctx, m.text); err != nil {
+			notificationsWg.Add(1)
+			go func(m messageToSend) {
+				defer notificationsWg.Done()
+				if err := m.Message.sendMessage(ctx, m.text); err != nil {
+					log.WithFields(log.Fields{
+						"notificationType": fmt.Sprintf("%T", m.Message),
+						"service":          m.serviceName,
+					}).Errorf("Error sending notification: %s", err)
+					return
+				}
 				log.WithFields(log.Fields{
 					"notificationType": fmt.Sprintf("%T", m.Message),
 					"service":          m.serviceName,
-				}).Errorf("Error sending notification: %s", err)
-			}
+				}).Info("Notification Sent")
+			}(m)
 		}
+		notificationsWg.Wait()
 		close(notificationsSent)
 	}()
 
@@ -343,4 +354,5 @@ func main() {
 	serviceWg.Wait()
 	close(notificationsChan)
 	<-notificationsSent
+	log.Info("Finished run")
 }
