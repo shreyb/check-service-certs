@@ -1,5 +1,5 @@
 Name:           check-service-certs
-Version:        0.1
+Version:        0.1.1
 Release:        1
 Summary:        Simple utility to check X509 certificates for expiration, and send email and Slack notifications if needed 
 
